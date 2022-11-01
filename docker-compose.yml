@@ -1,0 +1,33 @@
+version: '3.3'
+
+services: 
+  database:
+    container_name: database
+    image: mariadb:latest
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db:/var/lib/mysql
+    networks:
+      - uis_salud
+  uisalud_app:
+    container_name: uisalud_app
+    depends_on:
+      - database
+    build: .
+    env_file: ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQLDB_ROOT_PASSWORD
+      DATABASE_HOST: database
+    ports:
+      - 8000:8000
+    networks:
+      - uis_salud    
+      
+networks: 
+  uis_salud:
+    driver: bridge

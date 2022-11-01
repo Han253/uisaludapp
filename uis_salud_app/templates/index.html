@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}   
+<title>Inicio</title>
+<style>
+    .alert-message{        
+        position: fixed;
+        width: 80vw;
+        margin-left: 7.5vw;
+        margin-top: 25vh;
+    }
+
+    .button{
+        width: 80vw;
+        padding: 18px 0px;
+        font-size: 22px;
+        background-color: rgb(34, 90, 179);
+        color: white;
+        display: block;
+        margin: auto;
+        text-decoration: none;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 5px;
+        margin-bottom: 30px;
+    }
+
+    .button:hover{
+        background-color: rgb(73, 136, 235);
+        color: white;
+    }
+
+    .alert-message{
+        text-align: center;
+        height: 50vh;
+        padding-top: 15%;  
+    }
+
+    .message-alert{
+        font-size: 30px;               
+    }
+
+    .close-button{
+        border:1px solid;
+        background-color: rgb(228, 232, 145);
+        width: 30vw;
+        font-size: 20px;
+    }
+
+    @media screen and (orientation: portrait) {
+
+        .content-div{
+            margin: auto;
+            padding: 25vh 0px;
+            height: 92vh;
+        }
+
+        .navbar-height{
+            height: 8vh;
+        }
+    }
+
+    @media screen and (orientation: landscape) {
+        .content-div{
+            margin: auto;
+            padding: 15vh 0px;
+            height: 88vh;
+        }
+
+        .navbar-height{
+            height: 12vh;
+        }
+    }
+
+</style>
+{% endblock extrahead%}
+
+{% block title %}
+    <nav class="navbar bg-light border-bottom navbar-height">
+        <div class="container-fluid">
+          <span class="navbar-brand mb-0 h1">Inicio</span>
+          <p class="h3">{{ user }}</p>
+        </div>
+    </nav>
+{% endblock title %}
+
+{% block content %}
+{% if messages %}
+	{% for message in messages %}
+    <div {% if message.tags == 'warning' %} class="alert alert-warning alert-message"{% else %} class="alert alert-success alert-message" {% endif %}>
+        <b class="message-alert">{{ message }}</b>
+        <br>
+        <button class="close-button" onclick="cerrarMensaje();">CERRAR</button>
+    </div>	
+	{% endfor %}
+{% endif %}
+<div class="content-div align-middle">
+    <a class="button" href="{% url 'arterial' %}">PRESIÓN ARTERIAL</a>
+
+    <a class="button" href="{% url 'glucosa' %}">NIVEL GLUCOSA</a>
+    
+    <a class="button" href="{% url 'medidas' %}">MEDIDAS CORPORALES</a>
+</div>
+
+<script>
+    function cerrarMensaje(){
+        const collection = document.getElementsByClassName("alert-message");
+        for (let i = 0; i < collection.length; i++) {
+        collection[i].style.visibility = "hidden";
+        }
+    }
+</script>
+
+{% endblock content%}

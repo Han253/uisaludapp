@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}  
+<title>Arterial</title>
+<style>
+
+    #comida{
+        width: 80vw;
+        margin: auto;
+        font-size: 20px;
+    }
+
+    .back{
+        height: 25px;
+        padding: 0px 10px;
+    }
+
+    .content-form{
+        text-align: center;
+        align-items: center;
+    }
+
+    .data-imput{
+        width: 40vw;
+        height: 70px;
+        margin: auto;
+        text-align: center;
+        font-size: 50px;
+        margin-bottom: 30px;
+    }
+
+    .input-label{
+        margin-bottom: 30px;
+    }
+
+    .action-button{
+        background-color: rgb(19, 72, 143);
+        border: none;
+        width: 100px;
+        height: 60px;
+        color: white;
+        font-weight: bold;
+        font-size: 30px;
+        border-radius: 5px;
+    }
+
+    .action-button:hover{
+        background-color: rgb(35, 109, 206);
+    }
+
+    .content-buttons{
+        margin-bottom: 30px;        
+        margin: 30px 0px;
+    }
+
+    .send-button{
+        background-color: rgb(15, 113, 40);
+        border: none;
+        width: 80vw;
+        height: 60px;
+        color: white;
+        font-size: 30px;
+        border-radius: 5px;
+    }
+
+    @media screen and (orientation: portrait) {
+
+        .content-div{
+            margin: auto;
+            padding: 5vh 0px;
+            height: 92vh;
+        }
+
+        .navbar-height{
+            height: 8vh;
+        }
+    }
+
+    @media screen and (orientation: landscape) {
+        .content-div{
+            margin: auto;
+            padding: 2vh 0px;
+            height: 88vh;
+        }
+
+        .navbar-height{
+            height: 12vh;
+        }
+    }
+
+</style>
+{% endblock extrahead%}
+
+{% block title %}
+    <nav class="navbar bg-light border-bottom navbar-height">
+        <div class="container-fluid">
+          <span class="navbar-brand mb-0 h1"><a href="{% url 'home'%}"><img class="back" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAQAAABIkb+zAAAAlklEQVR4Ae3a1REDMRDG4A3VmHbcUFLigf0exn/mkxuQjmELAAAAAD5Eq5atP6+rZeuPhGz9kZCtPxKy9fs6Zuuf60CfPn369OnTp0+fPn369OnTfx36X1vh+nO6/pytL+D1BCexy+iNhFPt6/dIOEiQIEGCBAkSJEiQ8B0k+PwoQYKhP2OXAYOvRo+vD38bvwcAAACABXF8ILs1PQqpAAAAAElFTkSuQmCC"></a>
+            PRESIÓN ARTERIAL</span>
+        </div>
+    </nav>
+{% endblock title %}
+
+{% block content %}
+<div class="content-div overflow-auto">
+    <div class="content-form">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1 class="input-label">PRESIÓN SISTÓLICA <sub>(mm/hg)</sub></h1>
+            {{ form.presionarterialsistolica }}
+            <div class="row content-buttons">                
+                <div class="col">
+                    <button type="button" class="action-button" onclick="lessValueSis();">-</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="action-button" onclick="addValueSis();">+</button>
+                </div>
+            </div>
+            <h1 class="input-label">PRESIÓN DIASTÓLICA <sub>(mm/hg)</sub></h1>
+            {{ form.presionarterialdiastolica }}
+            <div class="row content-buttons">                
+                <div class="col">
+                    <button type="button" class="action-button" onclick="lessValueDias();">-</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="action-button" onclick="addValueDias();">+</button>
+                </div>
+            </div>           
+            <br>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal_body">
+                        <div id="content_modal">
+                            <p class="h2">Usted Registró</p>
+                            <h2>Presión Sistólica</h2>
+                            <p class="h2" id="modal_sis">120</p>
+                            <h2>Presión Diastólica</h2>
+                            <p class="h2" id="modal_dias">80</p>
+                        </div>
+                        <div id="error_content" style="display: none;">
+                            <p class="h3">Los valores que está registrando no son coherentes, 
+                                presión sistólica debe registrar valores entre 40 y 250, 
+                                presión diastólica debe presentar valores entre 40 y 150</p>
+                        </div>                        
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+                    <button id="confirmar_button" class="btn btn-primary" type="submit">CONFIRMAR</button> 
+                    </div>
+                </div>
+                </div>
+            </div>
+            <button type="button" class="send-button" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="updateModal();">ENVIAR</button>
+                      
+        </form>        
+    </div>
+</div>
+
+<script>
+    
+    var myModal = document.getElementById('exampleModal');
+
+    myModal.addEventListener('shown.bs.modal', function () {
+        dias = parseInt(document.getElementById("id_presionarterialdiastolica").value);
+        sis = parseInt(document.getElementById("id_presionarterialsistolica").value);
+        
+        if((dias < 40 || sis < 40 || dias > 250 || sis > 250)){
+           
+            document.getElementById("confirmar_button").style.display = "none";
+            document.getElementById("error_content").style.display = "block";
+            document.getElementById("content_modal").style.display = "none";
+        } else {
+            document.getElementById("confirmar_button").style.display = "block";
+            document.getElementById("error_content").style.display = "none";
+            document.getElementById("content_modal").style.display = "block";
+            
+        }
+    });
+
+    function addValueSis(){
+        element = document.getElementById("id_presionarterialsistolica")
+        element.value = parseInt(element.value)+1
+    }
+
+    function lessValueSis(){
+        element = document.getElementById("id_presionarterialsistolica")
+        element.value = parseInt(element.value)-1
+    }
+
+    function addValueDias(){
+        element = document.getElementById("id_presionarterialdiastolica")
+        element.value = parseInt(element.value)+1
+    }
+
+    function lessValueDias(){
+        element = document.getElementById("id_presionarterialdiastolica")
+        element.value = parseInt(element.value)-1
+    }
+
+    function updateModal(){
+        dias_dat = document.getElementById("id_presionarterialdiastolica")
+        sis_dat = document.getElementById("id_presionarterialsistolica")
+        modal_dias = document.getElementById("modal_dias")
+        modal_sis = document.getElementById("modal_sis")
+        modal_dias.innerHTML = dias_dat.value
+        modal_sis.innerHTML = sis_dat.value
+    }
+</script>
+
+{% endblock content%}

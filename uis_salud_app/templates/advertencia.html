@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}   
+<title>Alerta</title>
+<style>
+    .alert-message{        
+        position: fixed;
+        width: 80vw;
+        margin-left: 8vw;
+        margin-top: 20px;
+    }
+
+    .button{
+        width: 80vw;
+        padding: 18px 0px;
+        font-size: 22px;
+        background-color: rgb(34, 90, 179);
+        color: white;
+        display: block;
+        margin: auto;
+        text-decoration: none;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 5px;
+        margin-bottom: 30px;
+    }
+
+    .button:hover{
+        background-color: rgb(73, 136, 235);
+        color: white;
+    }
+
+    .message-alert{
+        font-size: 16px;
+    }
+
+    .close-button{
+        border:1px solid;
+        background-color: rgb(228, 232, 145);
+        width: 30vw;
+        font-size: 20px;
+    }
+
+    .content-div{
+        height: 100vh;
+        padding: 5%;
+        text-align: justify;
+        font-size: 20px;
+    }
+
+    .alerta-h{
+        text-align: center;
+        font-weight: bold;
+        font-size: xx-large;
+        color: rgb(170, 135, 10);
+        margin-bottom: 20px;
+    }
+
+    .boton-entendido{
+        font-size: 30px;
+        width: 20%;
+        margin: auto;
+    }
+
+    .info_div{
+        border: 1px solid;
+        padding: 8px;
+        margin-bottom: 5px;
+    }
+
+    .title{
+        color:brown;
+    }
+
+
+    
+
+</style>
+{% endblock extrahead%}
+
+{% block title %}
+{% endblock title %}
+
+{% block content %}
+{% if messages %}
+	{% for message in messages %}
+    <div {% if message.tags == 'warning' %} class="alert alert-warning alert-message"{% else %} class="alert alert-success alert-message" {% endif %} role="alert">
+        <b class="message-alert">{{ message }}</b>
+        <br>
+        <button class="close-button" onclick="cerrarMensaje();">CERRAR</button>
+    </div>	
+	{% endfor %}
+{% endif %}
+<div class="content-div overflow-auto">
+    {% if alerta == "1" %}
+        <h2 class="alerta-h">Alerta</h2>
+        <p>Sus niveles de tensión arterial están fuera de lo normal, ¿presenta alguno de los 
+        siguientes síntomas?:</p>
+        <ul>
+            <li>Dolor de cabeza intenso.</li>
+            <li>Visión borrosa o destellos Luminosos.</li>
+            <li>Sensación de vértigo.</li>
+            <li>Pitos o ruidos en los oídos.</li>
+            <li>Opresión o dolor torácico.</li>
+            <li>Palpitaciones.</li>
+            <li>Dificultad al respirar.</li>
+            <li>Hormigueo o perdida de fuerza en extremidades.</li>
+        </ul>
+        <br>
+        <a class="btn btn-warning boton-entendido" href="{% url 'crisis_hiper' %}">Si</a>
+        <a class="btn btn-primary boton-entendido" href="{% url 'no_crisis' %}">No</a>
+    {% endif %}
+    {% if alerta == "2" %}
+        <h2 class="alerta-h">Alerta</h2>        
+        <p>Sus niveles de Glucosa son muy bajos,¿el paciente ha presentado <strong>pérdida de conciencia (o desmayo)?</strong>: </p>
+        <a class="btn btn-warning boton-entendido" href="{% url 'coma_diabetico' %}">Si</a>
+        <a class="btn btn-primary boton-entendido" href="{% url 'hipoglucemia' %}">No</a>
+    {% endif %}
+    
+</div>
+
+
+
+{% endblock content%}

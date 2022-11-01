@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}  
+<title>Arterial</title>
+<style>
+
+    #comida{
+        width: 80vw;
+        margin: auto;
+        font-size: 20px;
+    }
+
+    .back{
+        height: 25px;
+        padding: 0px 10px;
+    }
+
+    .content-form{
+        text-align: center;
+        align-items: center;
+    }
+
+    .data-imput{
+        width: 40vw;
+        height: 70px;
+        margin: auto;
+        text-align: center;
+        font-size: 50px;
+        margin-bottom: 30px;
+    }
+
+    .input-label{
+        margin-bottom: 30px;
+    }
+    
+
+    .send-button{
+        background-color: rgb(15, 113, 40);
+        border: none;
+        width: 80vw;
+        height: 60px;
+        color: white;
+        font-size: 30px;
+        border-radius: 5px;
+    }
+
+    @media screen and (orientation: portrait) {
+
+        .content-div{
+            margin: auto;
+            padding: 5vh 0px;
+            height: 92vh;
+        }
+
+        .navbar-height{
+            height: 8vh;
+        }
+    }
+
+    @media screen and (orientation: landscape) {
+        .content-div{
+            margin: auto;
+            padding: 2vh 0px;
+            height: 88vh;
+        }
+
+        .navbar-height{
+            height: 12vh;
+        }
+    }
+
+</style>
+{% endblock extrahead%}
+
+{% block title %}
+    <nav class="navbar bg-light border-bottom navbar-height">
+        <div class="container-fluid">
+          <span class="navbar-brand mb-0 h1"><a href="{% url 'home'%}"><img class="back" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAQAAABIkb+zAAAAlklEQVR4Ae3a1REDMRDG4A3VmHbcUFLigf0exn/mkxuQjmELAAAAAD5Eq5atP6+rZeuPhGz9kZCtPxKy9fs6Zuuf60CfPn369OnTp0+fPn369OnTfx36X1vh+nO6/pytL+D1BCexy+iNhFPt6/dIOEiQIEGCBAkSJEiQ8B0k+PwoQYKhP2OXAYOvRo+vD38bvwcAAACABXF8ILs1PQqpAAAAAElFTkSuQmCC"></a>
+            MEDIDAS CORPORALES</span>
+        </div>
+    </nav>
+{% endblock title %}
+
+{% block content %}
+<div class="content-div overflow-auto">
+    <div class="content-form">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if registro %}
+            <div style="text-align: center; font-size: 20px; background-color: bisque;">
+                <p>Últimas medidas registradas {{registro.fecharegistro}}</p>
+                <table style="text-align: center; margin:auto;">
+                    <tr>
+                        <td><b>Peso:</b> {{registro.peso}}</td>
+                        <td><b>Abdomen:</b> {{registro.perimetro_abdominal}}</td>
+                        <td><b>Pantorrilla:</b> {{registro.perimetro_pantorrilla}}</td>
+                    </tr>
+                </table>
+            </div>
+            {% endif %}
+            <h1 class="input-label">PESO <sub>(Kg)</sub></h1>
+            {{ form.peso }}
+            <h1 class="input-label">PERÍMETRO ABDOMINAL <sub>(cm)</sub></h1>
+            {{ form.perimetro_abdominal }}            
+            <h1 class="input-label">PERÍMETRO PANTORRILLA <sub>(cm)</sub></h1>
+            {{ form.perimetro_pantorrilla }}           
+            <br>
+            <button class="send-button" type="submit">ENVIAR</button>          
+        </form>        
+    </div>
+</div>
+
+
+{% endblock content%}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block extrahead %}
+ 
+<title>Ingreso</title>
+<style>
+
+    #logo_uis{
+        width: 200px;
+    }
+
+    .label_input{
+        text-align: center;
+    }
+    
+    .login_div{
+        height: 85vh;
+    }
+
+    .logos_div{
+        height: 15vh;
+    }
+
+    
+</style>
+{% endblock extrahead%}
+
+{% block title %}
+{% endblock title %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center logos_div">
+    <img id="logo_uis" src="{% static 'img/uis.png' %}">
+</div>
+<div class="d-flex justify-content-center align-items-center login_div">    
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1 class="input-label label_input">INGRESO</sub></h1>
+        <input type="text" required='' name="user" id="user" placeholder="Ingresar Usuario" class="form-control form-control-lg">
+        <br>
+        <button class="btn btn-primary">INGRESAR</button>
+    </form>
+</div>
+{% endblock content%}
