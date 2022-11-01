@@ -6,7 +6,7 @@ WORKDIR /app
 ADD requirements.txt /app/
 RUN pip install -r requirements.txt
 
-ADD uis_salud_app/ /app/
+ADD . /app/
 
 EXPOSE 8000
 

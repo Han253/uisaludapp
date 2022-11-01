@@ -7,9 +7,7 @@ from django.http import HttpResponse
 from .models import Registropaciente
 from .forms import RegistroPacienteFormGlucosa, RegistroPacienteFormPresion, RegistroPacienteMedidas
 
-users = {}
-users["2022_1"] = 1
-users["2022_2"] = 2
+users = {"2022_1":1,"2022_2":2,"2022_3":3,"2022_4":4,"2022_5":5}
 
 # Create your views here.
 def login(request):

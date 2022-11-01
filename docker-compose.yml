@@ -18,7 +18,7 @@ services:
     container_name: uisalud_app
     depends_on:
       - database
-    build: .
+    build: uis_salud_app
     env_file: ./.env
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQLDB_ROOT_PASSWORD
