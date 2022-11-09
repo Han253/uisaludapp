@@ -14,5 +14,30 @@ class Registropaciente(models.Model):
     paciente = models.BigIntegerField(blank=True, null=True)
 
     class Meta:
-        #managed = False
+        managed = False
         db_table = 'registropaciente'
+
+class Usuario(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    activo = models.TextField(blank=True, null=True)
+    contrasena = models.CharField(max_length=255)
+    correopersonal = models.CharField(max_length=255)
+    descripcionpersonal = models.TextField(blank=True, null=True)
+    fechaimagen = models.DateTimeField(blank=True, null=True)
+    genero = models.IntegerField()
+    imagenperfil = models.TextField(blank=True, null=True)
+    movilwhatsapp = models.CharField(max_length=255, blank=True, null=True)
+    nombre = models.CharField(max_length=255)
+    primerapellido = models.CharField(max_length=255)
+    primernombre = models.CharField(max_length=255)
+    segundoapellido = models.CharField(max_length=255, blank=True, null=True)
+    segundonombre = models.CharField(max_length=255, blank=True, null=True)
+    tokenresetcontrasena = models.CharField(max_length=255, blank=True, null=True)
+    tipo_usuario = models.CharField(max_length=31)
+    fechanacimiento = models.DateField(blank=True, null=True)
+    codigo = models.CharField(max_length=255, blank=True, null=True)
+    diagnostico = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'usuario'

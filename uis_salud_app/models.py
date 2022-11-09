@@ -124,7 +124,7 @@ class DjangoSession(models.Model):
 
 class Registropaciente(models.Model):
     id = models.BigAutoField(primary_key=True)
-    fecharegistro = models.DateTimeField(blank=True, null=True)
+    fecharegistro = models.DateTimeField()
     glucosa = models.FloatField(blank=True, null=True)
     despues_comida = models.IntegerField(blank=True, null=True)
     perimetro_abdominal = models.FloatField(blank=True, null=True)
@@ -137,3 +137,29 @@ class Registropaciente(models.Model):
     class Meta:
         managed = False
         db_table = 'registropaciente'
+
+
+class Usuario(models.Model):
+    id = models.BigIntegerField()
+    activo = models.TextField(blank=True, null=True)  # This field type is a guess.
+    contrasena = models.CharField(max_length=255)
+    correopersonal = models.CharField(max_length=255)
+    descripcionpersonal = models.TextField(blank=True, null=True)
+    fechaimagen = models.DateTimeField(blank=True, null=True)
+    genero = models.IntegerField()
+    imagenperfil = models.TextField(blank=True, null=True)
+    movilwhatsapp = models.CharField(max_length=255, blank=True, null=True)
+    nombre = models.CharField(max_length=255)
+    primerapellido = models.CharField(max_length=255)
+    primernombre = models.CharField(max_length=255)
+    segundoapellido = models.CharField(max_length=255, blank=True, null=True)
+    segundonombre = models.CharField(max_length=255, blank=True, null=True)
+    tokenresetcontrasena = models.CharField(max_length=255, blank=True, null=True)
+    tipo_usuario = models.CharField(max_length=31)
+    fechanacimiento = models.DateField(blank=True, null=True)
+    codigo = models.CharField(max_length=255, blank=True, null=True)
+    diagnostico = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'usuario'

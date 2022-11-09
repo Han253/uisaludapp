@@ -4,7 +4,7 @@ from django.template import loader
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.http import HttpResponse
-from .models import Registropaciente
+from .models import Registropaciente, Usuario
 from .forms import RegistroPacienteFormGlucosa, RegistroPacienteFormPresion, RegistroPacienteMedidas
 
 users = {"2022_1":1,"2022_2":2,"2022_3":3,"2022_4":4,"2022_5":5}
@@ -14,7 +14,9 @@ def login(request):
     template = loader.get_template('ingreso.html')
     if request.method == "POST":
         user = request.POST['user']
-        request.session['user'] = user
+        user_db = Usuario.objects.filter(codigo=user)
+        if len(user_db)==1:            
+            request.session['user'] = user_db[0].id
         return redirect('home')  
     context = {}
     return HttpResponse(template.render(context,request))
@@ -46,7 +48,7 @@ def glucosa(request):
         #Obtener usuario de las cookies
         user = request.session.get('user',None)
         if user:
-            instance.paciente = users[user]
+            instance.paciente = user
         instance.save()
         
         #ADVERTENCIAS 
@@ -69,7 +71,7 @@ def tension_arterial(request):
         instance = form.save(commit=False)
         user = request.session.get('user',None)
         if user:
-            instance.paciente = users[user]
+            instance.paciente = user
         instance.save()
         
         #ADVERTENCIAS 
@@ -93,7 +95,7 @@ def medidas_corporales(request):
         #Obtener usuario de las cookies
         user = request.session.get('user',None)
         if user:
-            instance.paciente = users[user]
+            instance.paciente = user
         instance.save()
         messages.add_message(request, messages.INFO, 'Datos enviados correctamente.')
         return redirect('home')
