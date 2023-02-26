@@ -17,6 +17,7 @@ def login(request):
         user_db = Usuario.objects.filter(codigo=user)
         if len(user_db)==1:            
             request.session['user'] = user_db[0].id
+            request.session['user_name'] = user_db[0].codigo
         return redirect('home')  
     context = {}
     return HttpResponse(template.render(context,request))
@@ -24,9 +25,10 @@ def login(request):
 def home(request):
     template = loader.get_template('index.html')
     user = request.session.get('user',None)
-    if not user:
+    user_name = request.session.get('user_name',None)
+    if not user or not user_name:
         return redirect('login') 
-    context = {"user":user}
+    context = {"user_name":user_name}
     return HttpResponse(template.render(context,request))
 
 def glucosa(request):
@@ -99,12 +101,12 @@ def medidas_corporales(request):
         instance.save()
         messages.add_message(request, messages.INFO, 'Datos enviados correctamente.')
         return redirect('home')
-    ultima_medida = Registropaciente.objects.exclude(peso=None).order_by('fecharegistro');
-    if len(ultima_medida)>0:
-        registro = ultima_medida[len(ultima_medida)-1]
-    else:
-        registro = None
-    context = {"form":form,"registro":registro}
+    #ultima_medida = Registropaciente.objects.exclude(peso=None).order_by('fecharegistro');
+    #if len(ultima_medida)>0:
+        #registro = ultima_medida[len(ultima_medida)-1]
+    #else:
+        #registro = None
+    context = {"form":form}
     return render(request,"medidas.html",context)
 
 
@@ -131,5 +133,9 @@ def hipoglucemia(request):
 def no_crisis(request):
     context = {}
     return render(request,"no_crisis.html",context)
+
+def informacion(request):
+    context = {}
+    return render(request,"informacion.html",context)
 
 

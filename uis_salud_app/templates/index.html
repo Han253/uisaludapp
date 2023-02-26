@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %} 
 
 {% block extrahead %}   
 <title>Inicio</title>
@@ -12,8 +13,8 @@
 
     .button{
         width: 80vw;
-        padding: 18px 0px;
-        font-size: 22px;
+        padding: 12px 0px;
+        font-size: 1.2em;
         background-color: rgb(34, 90, 179);
         color: white;
         display: block;
@@ -22,7 +23,7 @@
         text-align: center;
         font-weight: bold;
         border-radius: 5px;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 
     .button:hover{
@@ -36,6 +37,12 @@
         padding-top: 15%;  
     }
 
+    #logo_luis{
+        width: 65vw;
+        margin-left: 15%;
+        margin-bottom: 5%;
+    }
+
     .message-alert{
         font-size: 30px;               
     }
@@ -47,12 +54,19 @@
         font-size: 20px;
     }
 
+    .button_disable{
+        background-color: rgb(168, 168, 168);
+    }
+    .button_disable:hover{
+        background-color: rgb(168, 168, 168);
+    }
+
     @media screen and (orientation: portrait) {
 
         .content-div{
             margin: auto;
-            padding: 25vh 0px;
-            height: 92vh;
+            padding: 5vh 0px;
+            height: 80vh;
         }
 
         .navbar-height{
@@ -64,7 +78,7 @@
         .content-div{
             margin: auto;
             padding: 15vh 0px;
-            height: 88vh;
+            height: 70vh;
         }
 
         .navbar-height{
@@ -76,10 +90,10 @@
 {% endblock extrahead%}
 
 {% block title %}
-    <nav class="navbar bg-light border-bottom navbar-height">
+    <nav class="navbar navbar-dark border-bottom navbar-height" style="background-color: rgb(34, 90, 179); color:white">
         <div class="container-fluid">
-          <span class="navbar-brand mb-0 h1">Inicio</span>
-          <p class="h3">{{ user }}</p>
+          <span class="navbar-brand mb-0 h1">INICIO</span>
+          <p class="h3">{{ user_name }}</p>
         </div>
     </nav>
 {% endblock title %}
@@ -95,11 +109,18 @@
 	{% endfor %}
 {% endif %}
 <div class="content-div align-middle">
+
+    <img id="logo_luis" src="{% static 'img/luis_salud_2.jpg' %}">
+
     <a class="button" href="{% url 'arterial' %}">PRESIÓN ARTERIAL</a>
 
     <a class="button" href="{% url 'glucosa' %}">NIVEL GLUCOSA</a>
     
     <a class="button" href="{% url 'medidas' %}">MEDIDAS CORPORALES</a>
+
+    <a class="button" href="{% url 'informacion' %}">INFORMACIÓN</a>
+
+    <a class="button button_disable" href="#">HISTORIAL</a>
 </div>
 
 <script>

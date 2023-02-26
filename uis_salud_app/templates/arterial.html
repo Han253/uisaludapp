@@ -26,18 +26,18 @@
         margin: auto;
         text-align: center;
         font-size: 50px;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 
     .input-label{
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 
     .action-button{
         background-color: rgb(19, 72, 143);
         border: none;
         width: 100px;
-        height: 60px;
+        height: 50px;
         color: white;
         font-weight: bold;
         font-size: 30px;
@@ -48,16 +48,16 @@
         background-color: rgb(35, 109, 206);
     }
 
-    .content-buttons{
-        margin-bottom: 30px;        
+    .content-buttons{               
         margin: 30px 0px;
+        margin-bottom: 20px; 
     }
 
     .send-button{
         background-color: rgb(15, 113, 40);
         border: none;
         width: 80vw;
-        height: 60px;
+        height: 50px;
         color: white;
         font-size: 30px;
         border-radius: 5px;
@@ -105,7 +105,7 @@
     <div class="content-form">
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <h1 class="input-label">PRESIÓN SISTÓLICA <sub>(mm/hg)</sub></h1>
+            <h2 class="input-label">PRESIÓN SISTÓLICA <br><sub>(mm/hg)</sub></h2>
             {{ form.presionarterialsistolica }}
             <div class="row content-buttons">                
                 <div class="col">
@@ -115,7 +115,7 @@
                     <button type="button" class="action-button" onclick="addValueSis();">+</button>
                 </div>
             </div>
-            <h1 class="input-label">PRESIÓN DIASTÓLICA <sub>(mm/hg)</sub></h1>
+            <h2 class="input-label">PRESIÓN DIASTÓLICA <br><sub>(mm/hg)</sub></h2>
             {{ form.presionarterialdiastolica }}
             <div class="row content-buttons">                
                 <div class="col">
