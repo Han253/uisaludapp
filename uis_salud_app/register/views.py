@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from .models import Registropaciente, Usuario
 from .forms import RegistroPacienteFormGlucosa, RegistroPacienteFormPresion, RegistroPacienteMedidas
 
-users = {"2022_1":1,"2022_2":2,"2022_3":3,"2022_4":4,"2022_5":5}
+#users = {"2022_1":1,"2022_2":2,"2022_3":3,"2022_4":4,"2022_5":5}
 
 # Create your views here.
 def login(request):
@@ -17,7 +17,7 @@ def login(request):
         user_db = Usuario.objects.filter(codigo=user)
         if len(user_db)==1:            
             request.session['user'] = user_db[0].id
-            request.session['user_name'] = user_db[0].codigo
+            request.session['user_name'] = user_db[0].primernombre + " " + user_db[0].primerapellido
         return redirect('home')  
     context = {}
     return HttpResponse(template.render(context,request))
@@ -101,11 +101,11 @@ def medidas_corporales(request):
         instance.save()
         messages.add_message(request, messages.INFO, 'Datos enviados correctamente.')
         return redirect('home')
-    #ultima_medida = Registropaciente.objects.exclude(peso=None).order_by('fecharegistro');
-    #if len(ultima_medida)>0:
-        #registro = ultima_medida[len(ultima_medida)-1]
-    #else:
-        #registro = None
+    ultima_medida = Registropaciente.objects.exclude(peso=None).order_by('fecharegistro');
+    if len(ultima_medida)>0:
+        registro = ultima_medida[len(ultima_medida)-1]
+    else:
+        registro = None
     context = {"form":form}
     return render(request,"medidas.html",context)
 
@@ -137,5 +137,9 @@ def no_crisis(request):
 def informacion(request):
     context = {}
     return render(request,"informacion.html",context)
+
+def indHistorial(request):
+    context = {}
+    return render(request,"ind_historial.html",context)
 
 
