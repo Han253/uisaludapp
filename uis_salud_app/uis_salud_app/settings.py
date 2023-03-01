@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-mrr)jwt!76b4wit0$77m&jm3u5d(*n_kev9sw7ila=l0bvh3wr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://*','http://localhost*','127.0.0.1','nginx','localhost']
+ALLOWED_HOSTS = ['http://*','http://localhost*','127.0.0.1','nginx','localhost','simon.uis.edu.co','http://simon.uis.edu.co']
 CSRF_TRUSTED_ORIGINS = ['http://*','https://*','http://localhost:8040']
 
 # Application definition
@@ -124,7 +124,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "/static/"
+STATIC_URL = "/uisaludapp/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     '/var/www/static/',

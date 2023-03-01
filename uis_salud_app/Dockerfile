@@ -6,4 +6,6 @@ WORKDIR /app
 ADD requirements.txt /app/
 RUN pip install -r requirements.txt
 
+COPY staticfiles /home/app/uisalud_app/staticfiles
+
 ADD . /app/
