@@ -16,5 +16,9 @@ urlpatterns = [
     path(sufix+'/crisis/coma_diabetico', views.coma_diabetico, name='coma_diabetico'),
     path(sufix+'/crisis/hipoglucemia', views.hipoglucemia, name='hipoglucemia'),
     path(sufix+'/no_crisis',views.no_crisis, name='no_crisis'),
-    path(sufix+'/informacion',views.informacion, name='informacion')
+    path(sufix+'/informacion',views.informacion, name='informacion'),
+    path(sufix+'/historial',views.indHistorial, name='historial'),
+    path(sufix+'/historial/presion',views.histPresionArterial, name='hist_pres'),
+    path(sufix+'/historial/glucosa',views.histGlucosa, name='hist_gluc'),
+    path(sufix+'/historial/medidas',views.histCorporal, name='hist_medidas')
 ]

@@ -7,9 +7,6 @@ from django.http import HttpResponse
 from .models import Registropaciente, Usuario
 from .forms import RegistroPacienteFormGlucosa, RegistroPacienteFormPresion, RegistroPacienteMedidas
 
-#users = {"2022_1":1,"2022_2":2,"2022_3":3,"2022_4":4,"2022_5":5}
-
-# Create your views here.
 def login(request):
     template = loader.get_template('ingreso.html')
     if request.method == "POST":
@@ -45,7 +42,7 @@ def glucosa(request):
             instance.despues_comida = 1
         elif comida == '3':
             #toma espontanea
-            instance.despues_comida = 3
+            instance.despues_comida = 2
         
         #Obtener usuario de las cookies
         user = request.session.get('user',None)
@@ -141,5 +138,49 @@ def informacion(request):
 def indHistorial(request):
     context = {}
     return render(request,"ind_historial.html",context)
+
+def histPresionArterial(request):
+    #Obtener usuario de las cookies
+    user = request.session.get('user',None)
+    if user!=None:
+        ultima_medida = Registropaciente.objects.filter(paciente=user).exclude(presionarterialsistolica=None).order_by('-fecharegistro');
+        if len(ultima_medida)>0:
+            registros = ultima_medida[:10]
+        else:
+            registros = None
+        context={'registros':registros}
+    else:
+        context={'registros':None}
+    return render(request,"historial_presion_arterial.html",context)
+
+def histGlucosa(request):
+    #Obtener usuario de las cookies
+    user = request.session.get('user',None)
+    if user!=None:
+        ultima_medida = Registropaciente.objects.filter(paciente=user).exclude(glucosa=None).order_by('-fecharegistro');
+        if len(ultima_medida)>0:
+            registros = ultima_medida[:10]
+        else:
+            registros = None
+        context={'registros':registros}
+    else:
+        context={'registros':None}
+    return render(request,"historial_glucosa.html",context)
+
+def histCorporal(request):
+    #Obtener usuario de las cookies
+    user = request.session.get('user',None)
+    if user!=None:
+        ultima_medida = Registropaciente.objects.filter(paciente=user).exclude(peso=None).order_by('-fecharegistro');
+        if len(ultima_medida)>0:
+            registros = ultima_medida[:10]
+        else:
+            registros = None
+        context={'registros':registros}
+    else:
+        context={'registros':None}
+    return render(request,"historial_medidas.html",context)
+
+
 
 
