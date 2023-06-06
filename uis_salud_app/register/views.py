@@ -38,7 +38,7 @@ def home(request):
                 ultimo_registro = registros[0]
                 dias = today-ultimo_registro.fecharegistro
                 if dias > datetime.timedelta(days=2) :
-                    messages.add_message(request, messages.INFO, 'Ultimo registro enviado hace más de dos días, se recomienda ser constante en la toma de datos para un correcto monitoreo.')
+                    messages.add_message(request, messages.INFO, 'Último registro enviado hace más de dos días, se recomienda ser constante en la toma de datos para un correcto monitoreo.')
         else:
             return redirect('login')
 
