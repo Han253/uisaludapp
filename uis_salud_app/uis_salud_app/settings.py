@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'uisalud',
         'USER': 'root',
-        'PASSWORD': os.getenv("MYSQLDB_ROOT_PASSWORD", default="localhost"),
+        'PASSWORD': os.getenv("MYSQLDB_ROOT_PASSWORD", default="admin"),
         'HOST':os.getenv("DATABASE_HOST", default="localhost"),
         'PORT':3306
     }
@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 

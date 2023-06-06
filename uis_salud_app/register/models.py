@@ -1,4 +1,5 @@
 from django.db import models
+from django_mysql.models import Bit1BooleanField
 
 # Create your models here.
 class Registropaciente(models.Model):
@@ -19,7 +20,7 @@ class Registropaciente(models.Model):
 
 class Usuario(models.Model):
     id = models.BigIntegerField(primary_key=True)
-    activo = models.TextField(blank=True, null=True)
+    activo = Bit1BooleanField()
     contrasena = models.CharField(max_length=255)
     correopersonal = models.CharField(max_length=255)
     descripcionpersonal = models.TextField(blank=True, null=True)
@@ -37,6 +38,7 @@ class Usuario(models.Model):
     fechanacimiento = models.DateField(blank=True, null=True)
     codigo = models.CharField(max_length=255, blank=True, null=True)
     diagnostico = models.IntegerField()
+    ultimoingreso = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
