@@ -31,7 +31,6 @@ def home(request):
         if len(resultado) ==1:
             tz = timezone('America/Bogota')
             today = tz.localize(datetime.datetime.now())
-            print(today)
             usuario = resultado[0]
             usuario.ultimoingreso = today
             usuario.save()
