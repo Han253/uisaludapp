@@ -29,7 +29,9 @@ def home(request):
     else:
         resultado = Usuario.objects.filter(id=user)        
         if len(resultado) ==1:
-            today = datetime.datetime.now(datetime.timezone.utc)
+            tz = timezone('America/Bogota')
+            today = tz.localize(datetime.datetime.now())
+            print(today)
             usuario = resultado[0]
             usuario.ultimoingreso = today
             usuario.save()

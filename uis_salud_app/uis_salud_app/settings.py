@@ -85,7 +85,8 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': os.getenv("MYSQLDB_ROOT_PASSWORD", default="admin"),
         'HOST':os.getenv("DATABASE_HOST", default="localhost"),
-        'PORT':3306
+        'PORT':3306,
+        'TIME_ZONE': 'America/Bogota'
     }
 }
 
@@ -112,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es'
 
 TIME_ZONE = 'America/Bogota'
 
