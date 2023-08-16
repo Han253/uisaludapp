@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'uis_salud_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'uisalud',
+        'NAME': os.getenv("MYSQL_DATABASE", default="uisalud"),
         'USER':  os.getenv("MYSQL_USER", default="root"),
         'PASSWORD': os.getenv("MYSQL_PASSWORD", default="admin"),
-        'HOST':os.getenv("MYSQL_DATABASE", default="localhost"),
+        'HOST':os.getenv("DATABASE_HOST", default="localhost"),
         'PORT':3306,
         'TIME_ZONE': 'America/Bogota'
     }
